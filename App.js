@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 import CategoryScreen from './screens/CategoryScreen';
+import MealsScreen from './screens/MealsScreen';
+import RecipeScreen from './screens/RecipeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -15,8 +17,10 @@ export default function App() {
 
 function StackNavigation() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Category">
       <Stack.Screen name="Category" component={CategoryScreen} />
+      <Stack.Screen name="Meals" component={MealsScreen} />
+      <Stack.Screen name="Recipe" component={RecipeScreen} />
     </Stack.Navigator>
   )
 }
