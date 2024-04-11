@@ -1,24 +1,26 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { firebase } from "../firebase";
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { firebase } from '../firebase';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleLogin = () => {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Signed in successfully
-        var user = userCredential.user;
-        console.log(user);
-        // Navigate to CategoryScreen
-        navigation.navigate('Category');
-      })
-      .catch((error) => {
-        var errorMessage = error.message;
-        console.log(errorMessage);
-      });
+  const handleLogin = async () => {
+    try {
+      const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+      
+      // Save user authentication state locally
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+
+      console.log('User logged in:', user.uid);
+      navigation.navigate('Category');
+    } catch (error) {
+      var errorMessage = error.message;
+      console.log(errorMessage);
+    }
   };
 
   return (
@@ -93,5 +95,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-

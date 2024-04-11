@@ -4,8 +4,10 @@ import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import MealsScreen from './screens/MealsScreen';
 import RecipeScreen from './screens/RecipeScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Add AsyncStorage import
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { firebase } from './firebase';
 
 const Stack = createStackNavigator();
 

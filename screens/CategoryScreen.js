@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Text, FlatList, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, FlatList, StyleSheet, Image, TouchableOpacity, SafeAreaView, Button } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetchCategories from '../service/CategoryFetcher';
+import { firebase } from '../firebase';
 
-const CategoryScreen = ({navigation}) => {
-  
+const CategoryScreen = ({ navigation }) => { // Receive navigation prop
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         const categoriesData = await fetchCategories();
@@ -16,13 +16,22 @@ const CategoryScreen = ({navigation}) => {
         console.log("Failed to fetch", error)
       }
     };
-
     fetchData();
   }, []);
 
   const navigateToMeals = (categoryName) => {
     console.log("Category Name", categoryName)
     navigation.navigate('Meals', { category: categoryName });
+  }
+
+  const handleLogout = async () => {
+    try {
+      await firebase.auth().signOut();
+      await AsyncStorage.removeItem('user');
+      navigation.navigate('Login'); // Navigate to LoginScreen after logout
+    } catch (error) {
+      console.log("Error signing out:", error);
+    }
   };
 
   const renderCategoryItem = ({ item }) => (
@@ -41,6 +50,7 @@ const CategoryScreen = ({navigation}) => {
         numColumns={2} 
         contentContainerStyle={styles.flatListContainer}
       />
+      <Button title="Log Out" onPress={handleLogout} />
     </SafeAreaView>
   );
 };
