@@ -5,9 +5,9 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load user data from AsyncStorage on component mount
     const loadUserData = async () => {
       try {
         const storedUserData = await AsyncStorage.getItem('userData');
@@ -16,6 +16,8 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (error) {
         console.error('Error loading userData from AsyncStorage:', error.message);
+      } finally {
+        setLoading(false); // Ensure loading is set to false even if an error occurs
       }
     };
 
@@ -30,13 +32,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signOut = () => {
-    // Update state and AsyncStorage when signing out
     setUserData(null);
     AsyncStorage.removeItem('userData');
   };
 
   return (
-    <AuthContext.Provider value={{ userData, signIn, signOut }}>
+    <AuthContext.Provider value={{ userData, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

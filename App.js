@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-native';
+import { ActivityIndicator, Button } from 'react-native';
 import CategoryScreen from './screens/CategoryScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -15,36 +15,38 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <AuthProvider>
-      
-        <AppNavigator />
-      
+      <AppNavigator />
     </AuthProvider>
   );
 }
 
-
 function AppNavigator() {
-  const { userData, signOut } = useAuth();
+  const { userData, signOut, loading } = useAuth();
+
+  if (loading) {
+    return (<ActivityIndicator size="large" color="#0000ff" />);
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={userData ? "Home" : "Login"}>
+      <Stack.Navigator initialRouteName={userData ? "Category" : "Login"}>
         {userData ? (
           <>
             <Stack.Screen name="Category" component={CategoryScreen} options={({ navigation }) => ({ headerRight: () => <SavedButton navigation={navigation} /> })} />
             <Stack.Screen name="Meals" component={MealsScreen} />
             <Stack.Screen name="Recipe" component={RecipeScreen} />
             <Stack.Screen name="Saved" component={SavedScreen} />
-          </>) :
+          </>
+        ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
           </>
-        }
+        )}
       </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }
-
 
 const SavedButton = ({ navigation }) => (
   <Button
