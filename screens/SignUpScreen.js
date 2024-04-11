@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { firebase } from '../firebase';
 import 'firebase/firestore';
 
@@ -19,6 +20,9 @@ export default function SignUpScreen({ navigation }) {
         username: username,
         email: email,
       });
+
+      // Save user authentication state locally
+      await AsyncStorage.setItem('user', JSON.stringify(user));
 
       console.log('User signed up and data stored in Firestore:', user.uid);
       
