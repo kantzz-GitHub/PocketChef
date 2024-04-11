@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { firebase } from '../firebase'; 
+import { firebase } from '../firebase';
 import fetchRecipeById from '../service/RecipeFetcher';
 
 const RecipeScreen = ({ route }) => {
@@ -34,7 +34,7 @@ const RecipeScreen = ({ route }) => {
         mealName: recipe.strMeal,
         thumbnail: recipe.strMealThumb,
       });
-  
+
       Alert.alert('Success', 'Meal saved successfully!', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ]);
@@ -47,7 +47,7 @@ const RecipeScreen = ({ route }) => {
     if (!firebase.auth().currentUser) {
       return;
     }
-  
+
     const userId = firebase.auth().currentUser.uid;
     try {
       const firestore = firebase.firestore();
@@ -67,7 +67,7 @@ const RecipeScreen = ({ route }) => {
       Alert.alert('Error', 'Failed to unsaved meal. Please try again later.');
     }
   };
-  
+
   if (!recipe) {
     return (
       <View style={styles.container}>
@@ -78,7 +78,7 @@ const RecipeScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{padding: 16}}>
+      <ScrollView style={{ padding: 16 }}>
         <Image source={{ uri: recipe.strMealThumb }} style={styles.image} />
         <Text style={styles.title}>{recipe.strMeal}</Text>
         <Text style={styles.instructions}>{recipe.strInstructions}</Text>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    elevation: 4, 
+    elevation: 4,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
