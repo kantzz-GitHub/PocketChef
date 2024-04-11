@@ -36,8 +36,15 @@ const CategoryScreen = ({ navigation }) => {
     }
   };
 
+
+  const navigateToMeals = (categoryName) => {
+    console.log("Category Name", categoryName)
+    navigation.navigate('Meals', { category: categoryName });
+  }
+
+
   const renderCategoryItem = ({ item }) => (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity onPress={() => navigateToMeals(item.strCategory)} style={styles.card}>
       <Image source={{ uri: item.strCategoryThumb }} style={styles.image} />
       <Text style={styles.title}>{item.strCategory}</Text>
     </TouchableOpacity>
