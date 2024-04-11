@@ -3,11 +3,16 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'rea
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { firebase } from '../firebase';
 import 'firebase/firestore';
+import {useAuth} from './Hooks/AuthContext'
+
 
 export default function SignUpScreen({ navigation }) {
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+
+  const { userData, signIn } = useAuth();
+
 
   const handleSignUp = async () => {
     try {
@@ -15,19 +20,18 @@ export default function SignUpScreen({ navigation }) {
       const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
       const user = userCredential.user;
 
+      
+
       // Store additional user data in Firestore
       await firebase.firestore().collection('users').doc(user.uid).set({
         username: username,
         email: email,
       });
 
-      // Save user authentication state locally
-      await AsyncStorage.setItem('user', JSON.stringify(user));
-
       console.log('User signed up and data stored in Firestore:', user.uid);
       
-      // Navigate to CategoryScreen
-      navigation.navigate('Category');
+      signIn(user)
+
     } catch (error) {
       var errorMessage = error.message;
       console.log(errorMessage);

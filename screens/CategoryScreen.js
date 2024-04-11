@@ -3,9 +3,12 @@ import { Text, FlatList, StyleSheet, Image, TouchableOpacity, SafeAreaView, Butt
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetchCategories from '../service/CategoryFetcher';
 import { firebase } from '../firebase';
+import {useAuth} from './Hooks/AuthContext'
 
 const CategoryScreen = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
+
+  const { userData, signOut } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +33,7 @@ const CategoryScreen = ({ navigation }) => {
     try {
       await firebase.auth().signOut();
       await AsyncStorage.removeItem('user');
-      navigation.navigate('Login'); // Navigate to LoginScreen after logout
+      signOut()
     } catch (error) {
       console.log("Error signing out:", error);
     }
