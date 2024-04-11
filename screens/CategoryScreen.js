@@ -17,6 +17,13 @@ const CategoryScreen = ({ navigation }) => { // Receive navigation prop
       }
     };
     fetchData();
+
+    // Check if user authentication state exists
+    AsyncStorage.getItem('user').then(user => {
+      if (user) {
+        navigation.navigate('Category');
+      }
+    });
   }, []);
 
   const handleLogout = async () => {
