@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { firebase } from '../firebase';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { firebase } from "../firebase";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = React.useState('');
