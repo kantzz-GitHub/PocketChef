@@ -22,7 +22,6 @@ export default function App() {
   );
 }
 
-
 function AppNavigator() {
   const { userData, signOut } = useAuth();
   return (
@@ -44,7 +43,6 @@ function AppNavigator() {
     </NavigationContainer>
   )
 }
-
 
 const SavedButton = ({ navigation }) => (
   <Button

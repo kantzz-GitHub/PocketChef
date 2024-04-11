@@ -3,7 +3,7 @@ import { Text, FlatList, StyleSheet, Image, TouchableOpacity, SafeAreaView, Butt
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetchCategories from '../service/CategoryFetcher';
 import { firebase } from '../firebase';
-import {useAuth} from './Hooks/AuthContext'
+import { useAuth } from './Hooks/AuthContext'
 
 const CategoryScreen = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
@@ -62,7 +62,7 @@ const CategoryScreen = ({ navigation }) => {
         data={categories}
         renderItem={renderCategoryItem}
         keyExtractor={(item) => item.idCategory}
-        numColumns={2} 
+        numColumns={2}
         contentContainerStyle={styles.flatListContainer}
       />
     </SafeAreaView>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     margin: 8,
     alignItems: 'center',
     elevation: 4,
-    width: '45%', 
+    width: '45%',
   },
   image: {
     width: 100,
