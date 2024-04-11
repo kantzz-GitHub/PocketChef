@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import fetchRecipeById from '../service/RecipeFetcher';
 import { firebase } from '../firebase'; 
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import fetchRecipeById from '../service/RecipeFetcher';
 
 const RecipeScreen = ({ route }) => {
