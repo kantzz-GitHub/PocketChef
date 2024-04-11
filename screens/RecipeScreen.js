@@ -5,7 +5,7 @@ import { firebase } from '../firebase';
 import fetchRecipeById from '../service/RecipeFetcher';
 
 const RecipeScreen = ({ route }) => {
-  const { mealId } = route.params;
+  const { mealId, isSaved } = route.params;
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
@@ -23,7 +23,6 @@ const RecipeScreen = ({ route }) => {
 
   const handleSave = async () => {
     if (!firebase.auth().currentUser) {
-      // User not logged in, handle accordingly
       return;
     }
 
@@ -36,17 +35,39 @@ const RecipeScreen = ({ route }) => {
         thumbnail: recipe.strMealThumb,
       });
   
-      // Success message or navigation to another screen
-      console.log('Meal saved successfully!');
       Alert.alert('Success', 'Meal saved successfully!', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ]);
     } catch (error) {
-      // Handle error
       console.error('Error saving meal: ', error);
     }
   };
 
+  const handleUnsave = async () => {
+    if (!firebase.auth().currentUser) {
+      return;
+    }
+  
+    const userId = firebase.auth().currentUser.uid;
+    try {
+      const firestore = firebase.firestore();
+      const mealDocSnapshot = await firestore.collection('savedMeals').doc(userId).collection('meals').get();
+      mealDocSnapshot.forEach(async (doc) => {
+        const mealData = doc.data();
+        if (mealData.mealId === recipe.idMeal) {
+          await doc.ref.delete();
+          console.log(`Meal with ID ${recipe.idMeal} unsaved successfully!`);
+          Alert.alert('Success', 'Meal unsaved successfully!', [
+            { text: 'OK', onPress: () => console.log('OK Pressed') },
+          ]);
+        }
+      });
+    } catch (error) {
+      console.error('Error unsaving meal: ', error);
+      Alert.alert('Error', 'Failed to unsaved meal. Please try again later.');
+    }
+  };
+  
   if (!recipe) {
     return (
       <View style={styles.container}>
@@ -62,10 +83,17 @@ const RecipeScreen = ({ route }) => {
         <Text style={styles.title}>{recipe.strMeal}</Text>
         <Text style={styles.instructions}>{recipe.strInstructions}</Text>
       </ScrollView>
-      <TouchableOpacity style={styles.floatingButton} onPress={handleSave}>
-        <Icon name="save" size={24} color="#fff" />
-        <Text style={styles.buttonText}>Save</Text>
-      </TouchableOpacity>
+      {!isSaved ? (
+        <TouchableOpacity style={styles.floatingButton} onPress={handleSave}>
+          <Icon name="save" size={24} color="#fff" />
+          <Text style={styles.buttonText}>Save</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.floatingButton} onPress={handleUnsave}>
+          <Icon name="delete" size={24} color="#fff" />
+          <Text style={styles.buttonText}>Unsave</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

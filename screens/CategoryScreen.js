@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetchCategories from '../service/CategoryFetcher';
 import { firebase } from '../firebase';
 
-const CategoryScreen = ({ navigation }) => { // Receive navigation prop
+const CategoryScreen = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
