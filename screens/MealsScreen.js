@@ -11,7 +11,7 @@ const MealsScreen = ({ route, navigation }) => {
         const mealsData = await fetchMealsByCategory(route.params.category);
         setMeals(mealsData);
       } catch (error) {
-        // Handle error if needed
+    
       }
     };
 
@@ -56,12 +56,12 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     alignItems: 'center',
     elevation: 4,
-    width: '100%', // Make the card occupy full width
-    overflow: 'hidden', // Ensure image doesn't overflow its container
+    width: '100%', 
+    overflow: 'hidden',
   },
   image: {
-    width: '100%', // Adjust image width to fit the card width
-    aspectRatio: 16 / 9, // Adjust aspect ratio as needed
+    width: '100%', 
+    aspectRatio: 16 / 9, 
     borderRadius: 8,
     marginBottom: 8,
   },

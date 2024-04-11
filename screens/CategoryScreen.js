@@ -21,7 +21,7 @@ const CategoryScreen = ({ navigation }) => {
     };
     fetchData();
 
-    // Check if user authentication state exists
+    
     AsyncStorage.getItem('user').then(user => {
       if (user) {
         navigation.navigate('Category');

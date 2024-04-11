@@ -14,7 +14,7 @@ const RecipeScreen = ({ route }) => {
         const recipeData = await fetchRecipeById(mealId);
         setRecipe(recipeData);
       } catch (error) {
-        // Handle error if needed
+        
       }
     };
 

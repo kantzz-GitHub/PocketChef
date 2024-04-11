@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error('Error loading userData from AsyncStorage:', error.message);
       } finally {
-        setLoading(false); // Ensure loading is set to false even if an error occurs
+        setLoading(false); 
       }
     };
 

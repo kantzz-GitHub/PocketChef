@@ -16,11 +16,9 @@ export default function SignUpScreen({ navigation }) {
 
   const handleSignUp = async () => {
     try {
-      // Create user in Firebase Authentication
       const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
       const user = userCredential.user;
 
-      // Store additional user data in Firestore
       await firebase.firestore().collection('users').doc(user.uid).set({
         username: username,
         email: email,
