@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Text, FlatList, StyleSheet, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import fetchCategories from '../service/CategoryFetcher';
 
 const CategoryScreen = () => {
+  
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         const categoriesData = await fetchCategories();
@@ -26,8 +28,7 @@ const CategoryScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Categories:</Text>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={categories}
         renderItem={renderCategoryItem}
@@ -35,7 +36,7 @@ const CategoryScreen = () => {
         numColumns={2} 
         contentContainerStyle={styles.flatListContainer}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -43,11 +44,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 16,
   },
   flatListContainer: {
     justifyContent: 'center',

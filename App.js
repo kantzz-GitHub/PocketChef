@@ -1,12 +1,24 @@
-import { SafeAreaView, StyleSheet } from 'react-native';
-import CategoryComponent from './screens/CategoryScreen';
+import { StyleSheet } from 'react-native';
+import CategoryScreen from './screens/CategoryScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <CategoryComponent />
-    </SafeAreaView>
+    <NavigationContainer>
+      <StackNavigation />
+    </NavigationContainer>
   );
+}
+
+function StackNavigation() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Category" component={CategoryScreen} />
+    </Stack.Navigator>
+  )
 }
 
 const styles = StyleSheet.create({
