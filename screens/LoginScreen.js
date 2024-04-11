@@ -11,10 +11,10 @@ export default function LoginScreen({ navigation }) {
     try {
       const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
       const user = userCredential.user;
-      
+  
       // Save user authentication state locally
       await AsyncStorage.setItem('user', JSON.stringify(user));
-
+  
       console.log('User logged in:', user.uid);
       navigation.navigate('Category');
     } catch (error) {
@@ -22,6 +22,7 @@ export default function LoginScreen({ navigation }) {
       console.log(errorMessage);
     }
   };
+  
 
   return (
     <View style={styles.container}>

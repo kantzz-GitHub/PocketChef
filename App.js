@@ -8,14 +8,17 @@ import RecipeScreen from './screens/RecipeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SavedScreen from './screens/SavedScreen';
+import { AuthProvider } from './screens/Hooks/AuthContext';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <StackNavigation />
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <StackNavigation />
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
 

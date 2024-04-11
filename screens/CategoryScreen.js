@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, FlatList, StyleSheet, Image, TouchableOpacity, SafeAreaView, Button } from 'react-native';
+import { Text, FlatList, StyleSheet, Image, TouchableOpacity, SafeAreaView, Button, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetchCategories from '../service/CategoryFetcher';
 import { firebase } from '../firebase';
@@ -17,12 +17,14 @@ const CategoryScreen = ({ navigation }) => {
       }
     };
     fetchData();
-  }, []);
 
-  const navigateToMeals = (categoryName) => {
-    console.log("Category Name", categoryName)
-    navigation.navigate('Meals', { category: categoryName });
-  }
+    // Check if user authentication state exists
+    AsyncStorage.getItem('user').then(user => {
+      if (user) {
+        navigation.navigate('Category');
+      }
+    });
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -35,7 +37,7 @@ const CategoryScreen = ({ navigation }) => {
   };
 
   const renderCategoryItem = ({ item }) => (
-    <TouchableOpacity onPress={() => navigateToMeals(item.strCategory)} style={styles.card}>
+    <TouchableOpacity style={styles.card}>
       <Image source={{ uri: item.strCategoryThumb }} style={styles.image} />
       <Text style={styles.title}>{item.strCategory}</Text>
     </TouchableOpacity>
@@ -43,6 +45,9 @@ const CategoryScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Button title="Log Out" onPress={handleLogout} />
+      </View>
       <FlatList
         data={categories}
         renderItem={renderCategoryItem}
@@ -50,7 +55,6 @@ const CategoryScreen = ({ navigation }) => {
         numColumns={2} 
         contentContainerStyle={styles.flatListContainer}
       />
-      <Button title="Log Out" onPress={handleLogout} />
     </SafeAreaView>
   );
 };
@@ -59,6 +63,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingHorizontal: 10,
+    paddingTop: 10,
   },
   flatListContainer: {
     justifyContent: 'center',
