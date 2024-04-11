@@ -76,16 +76,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   image: {
+    height: 200,
     width: '100%',
     padding: 16,
+    marginBottom: 16,
+    borderRadius: 8,
     backgroundColor: '#fff',
     alignItems: 'center',
-  },
-  image: {
-    width: 300,
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 16,
   },
   title: {
     fontSize: 24,
