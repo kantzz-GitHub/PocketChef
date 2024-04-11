@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { firebase } from '../firebase';
 
 export default function LoginScreen({ navigation }) {
@@ -23,7 +23,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.welcomeText}>Welcome back{"\n"}to PocketChef!</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -37,12 +37,12 @@ export default function LoginScreen({ navigation }) {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Login" onPress={handleLogin} />
-      <Button
-        title="Sign Up"
-        onPress={() => navigation.navigate('SignUp')}
-        style={styles.signupButton}
-      />
+      <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={styles.signupButton}>
+        <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -53,10 +53,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#fff',
   },
-  title: {
+  welcomeText: {
     fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 20,
+    color: '#333',
+    textAlign: 'center',
   },
   input: {
     width: '100%',
@@ -67,7 +71,27 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
   },
-  signupButton: {
+  loginButton: {
+    backgroundColor: '#007bff',
+    width: '100%',
+    paddingVertical: 12,
+    borderRadius: 5,
     marginTop: 10,
+    alignItems: 'center',
+  },
+  signupButton: {
+    backgroundColor: '#28a745',
+    width: '100%',
+    paddingVertical: 12,
+    borderRadius: 5,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
+
+
