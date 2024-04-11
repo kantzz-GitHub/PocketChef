@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } fr
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import fetchRecipeById from '../service/RecipeFetcher';
 import { firebase } from '../firebase'; 
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import fetchRecipeById from '../service/RecipeFetcher';
 
 const RecipeScreen = ({ route }) => {
   const { mealId } = route.params;
@@ -77,6 +79,12 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
+    padding: 16,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+  image: {
+    width: 300,
     height: 200,
     borderRadius: 8,
     marginBottom: 16,
